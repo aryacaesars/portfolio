@@ -18,7 +18,7 @@ export default function HeroSection() {
 
       <div className="z-10 flex flex-col items-center text-center space-y-8 max-w-full">
         <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-black px-4">
-          Hi, I'm <span className="font-normal">Arya</span> <span className="italic font-normal">Achmad</span>{" "}
+          Hi, I'm <span>Arya</span> <span className="italic font-normal">Achmad</span>{" "}
           <span>Caesar!</span>
         </h1>
 

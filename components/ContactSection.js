@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="py-16 sm:py-20 px-4 md:px-12">
+    <section id="contact" className="py-16 sm:py-20 px-4 text-black md:px-12">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold mb-8 sm:mb-12 text-center">Get in Touch</h2>
         <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
