@@ -164,21 +164,26 @@ export const Carousel = React.forwardRef(({ items, initialScroll = 0, isInfinite
             ))}
           </div>
         </div>
-        <div className="absolute left-1/2 bottom-0 -translate-x-1/2 flex justify-center gap-2">
-          <button
-            className="relative z-40 h-10 w-10 rounded-full bg-gray-100/80 backdrop-blur-sm flex items-center justify-center disabled:opacity-50 hover:bg-gray-100 transition-colors"
-            onClick={scrollLeft}
-            disabled={!canScrollLeft}
-          >
-            <IconArrowNarrowLeft className="h-6 w-6 text-gray-500" />
-          </button>
-          <button
-            className="relative z-40 h-10 w-10 rounded-full bg-gray-100/80 backdrop-blur-sm flex items-center justify-center disabled:opacity-50 hover:bg-gray-100 transition-colors"
-            onClick={scrollRight}
-            disabled={!canScrollRight}
-          >
-            <IconArrowNarrowRight className="h-6 w-6 text-gray-500" />
-          </button>
+        
+        {/* Move navigation and pagination outside the carousel */}
+        <div className="flex flex-col items-center gap-4 pt-4">
+          {/* Navigation buttons */}
+          <div className="flex justify-center gap-2">
+            <button
+              className="relative z-40 h-10 w-10 rounded-full bg-gray-100/80 backdrop-blur-sm flex items-center justify-center disabled:opacity-50 hover:bg-gray-100 transition-colors"
+              onClick={scrollLeft}
+              disabled={!canScrollLeft}
+            >
+              <IconArrowNarrowLeft className="h-6 w-6 text-gray-500" />
+            </button>
+            <button
+              className="relative z-40 h-10 w-10 rounded-full bg-gray-100/80 backdrop-blur-sm flex items-center justify-center disabled:opacity-50 hover:bg-gray-100 transition-colors"
+              onClick={scrollRight}
+              disabled={!canScrollRight}
+            >
+              <IconArrowNarrowRight className="h-6 w-6 text-gray-500" />
+            </button>
+          </div>
         </div>
       </div>
     </CarouselContext.Provider>

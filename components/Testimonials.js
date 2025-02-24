@@ -23,13 +23,13 @@ export const Testimonials = () => {
   ];
 
   return (
-    <section id="testimonials" className="py-20 bg-white">
-      <div className="container px-4 mx-auto">
+    <section id="testimonials" className="py-4 text-black sm:py-8 px-4 md:px-12">
+      <div className="max-w-6xl mx-auto">
         <div className="max-w-2xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-8 sm:mb-12 text-center">
             What My Clients Say
           </h2>
-          <p className="text-lg text-gray-800">
+          <p className="text-lg text-gray-600">
             Don't just take our word for it - hear from some of our satisfied clients
           </p>
         </div>
