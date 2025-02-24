@@ -15,16 +15,17 @@ export const Carousel = React.forwardRef(({ items, initialScroll = 0, isInfinite
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isResetting, setIsResetting] = useState(false);
 
   // Only add duplicates if infinite scroll is enabled
   const extendedItems = isInfinite 
-    ? [...items.slice(-1), ...items, ...items.slice(0, 2)]
+    ? [...items.slice(-2), ...items, ...items.slice(0, 2)]
     : items;
 
   useEffect(() => {
     if (carouselRef.current && isInfinite) {
-      const cardWidth = isMobile() ? 144 : 256;
-      carouselRef.current.scrollLeft = cardWidth + 12;
+      const cardWidth = isMobile() ? 230 : 384;
+      carouselRef.current.scrollLeft = cardWidth + 16;
       checkScrollability();
     }
   }, [isInfinite]);
@@ -38,25 +39,44 @@ export const Carousel = React.forwardRef(({ items, initialScroll = 0, isInfinite
   };
 
   const handleScroll = () => {
-    if (!carouselRef.current) return;
+    if (!carouselRef.current || !isInfinite || isResetting) return;
 
     const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
-    
-    if (isInfinite) {
-      const cardWidth = isMobile() ? 230 : 384;
-      const gap = 16;
+    const cardWidth = isMobile() ? 230 : 384;
+    const gap = 16;
 
-      if (scrollLeft + clientWidth >= scrollWidth - 10) {
-        carouselRef.current.style.scrollBehavior = 'auto';
-        carouselRef.current.scrollLeft = cardWidth + gap;
-        carouselRef.current.style.scrollBehavior = 'smooth';
-      }
+    // Reset to start
+    if (scrollLeft + clientWidth >= scrollWidth - cardWidth) {
+      setIsResetting(true);
+      requestAnimationFrame(() => {
+        if (carouselRef.current) {
+          carouselRef.current.style.scrollBehavior = 'auto';
+          carouselRef.current.scrollLeft = cardWidth + gap;
+          requestAnimationFrame(() => {
+            if (carouselRef.current) {
+              carouselRef.current.style.scrollBehavior = 'smooth';
+              setIsResetting(false);
+            }
+          });
+        }
+      });
+    }
 
-      if (scrollLeft <= 10) {
-        carouselRef.current.style.scrollBehavior = 'auto';
-        carouselRef.current.scrollLeft = scrollWidth - (2 * cardWidth + 2 * gap);
-        carouselRef.current.style.scrollBehavior = 'smooth';
-      }
+    // Reset to end
+    if (scrollLeft <= cardWidth) {
+      setIsResetting(true);
+      requestAnimationFrame(() => {
+        if (carouselRef.current) {
+          carouselRef.current.style.scrollBehavior = 'auto';
+          carouselRef.current.scrollLeft = scrollWidth - (2 * cardWidth + 2 * gap);
+          requestAnimationFrame(() => {
+            if (carouselRef.current) {
+              carouselRef.current.style.scrollBehavior = 'smooth';
+              setIsResetting(false);
+            }
+          });
+        }
+      });
     }
 
     checkScrollability();

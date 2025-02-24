@@ -11,6 +11,7 @@ export default function ProjectSection() {
   const categories = ["All", "Artificial Intelligence", "Productivity", "Product", "iOS", "Hiring"];
 
   const filteredData = selectedCategory === "All" ? data : data.filter(card => card.category === selectedCategory);
+  const showPagination = filteredData.length > 1; // Add this line
 
   const cards = filteredData.map((card, index) => (
     <Card 
@@ -84,7 +85,8 @@ export default function ProjectSection() {
           <Carousel 
             ref={carouselRef} 
             items={cards} 
-            isInfinite={selectedCategory === "All"} 
+            isInfinite={selectedCategory === "All"}
+            showPagination={showPagination} // Add this prop
           />
         </div>
       </div>
