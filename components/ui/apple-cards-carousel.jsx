@@ -38,8 +38,11 @@ export const Carousel = React.forwardRef(({ items, initialScroll = 0, isInfinite
   };
 
   const handleScroll = () => {
-    if (carouselRef.current && isInfinite) {
-      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+    if (!carouselRef.current) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+    
+    if (isInfinite) {
       const cardWidth = isMobile() ? 230 : 384;
       const gap = 16;
 
@@ -54,20 +57,30 @@ export const Carousel = React.forwardRef(({ items, initialScroll = 0, isInfinite
         carouselRef.current.scrollLeft = scrollWidth - (2 * cardWidth + 2 * gap);
         carouselRef.current.style.scrollBehavior = 'smooth';
       }
-
-      checkScrollability();
     }
+
+    checkScrollability();
   };
 
   const scrollLeft = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -300, behavior: "smooth" });
+      const cardWidth = isMobile() ? 230 : 384;
+      const scrollDistance = isInfinite ? -300 : -(cardWidth + 16); // 16 is gap
+      carouselRef.current.scrollBy({ 
+        left: scrollDistance, 
+        behavior: "smooth" 
+      });
     }
   };
 
   const scrollRight = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 300, behavior: "smooth" });
+      const cardWidth = isMobile() ? 230 : 384;
+      const scrollDistance = isInfinite ? 300 : cardWidth + 16; // 16 is gap
+      carouselRef.current.scrollBy({ 
+        left: scrollDistance, 
+        behavior: "smooth" 
+      });
     }
   };
 
