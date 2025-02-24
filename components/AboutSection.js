@@ -5,12 +5,24 @@ const aboutContent = {
   heading: "Who am I?",
   description:
     "I'm a passionate Full Stack Developer with a keen interest in building modern web applications. I specialize in creating user-friendly interfaces and robust backend systems.",
-  skillsTitle: "Skills",
-  skills: [
-    "Communication & Collaboration",
-    "Project Management",
-    "Web Development",
-    "Problem-Solving & Critical Thinking",
+  educationTitle: "Education & Experience",
+  education: [
+    {
+      title: "Information Technology",
+      institution: "Siliwangi University",
+      year: "2023 - present"
+    },
+    {
+      title: "Full Stack Developer",
+      institution: "Freelance",
+      year: "2024 - present"
+    },
+    {
+      title: "Graphic Designer Intern",
+      institution: "Undagi",
+      year: "2024 - present"
+    },
+    
   ],
 };
 
@@ -26,19 +38,20 @@ export default function AboutSection() {
             <h3 className="text-xl sm:text-2xl font-semibold">{aboutContent.heading}</h3>
             <p className="text-gray-600 leading-relaxed">{aboutContent.description}</p>
             <div className="space-y-4">
-              <h4 className="text-lg sm:text-xl font-semibold">{aboutContent.skillsTitle}</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {aboutContent.skills.map((skill, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-black rounded-full" />
-                    <span>{skill}</span>
+              <h4 className="text-lg sm:text-xl font-semibold">{aboutContent.educationTitle}</h4>
+              <div className="space-y-4">
+                {aboutContent.education.map((item, index) => (
+                  <div key={index} className="border-l-2 border-black pl-4">
+                    <h5 className="font-semibold text-lg">{item.title}</h5>
+                    <p className="text-gray-600">{item.institution}</p>
+                    <p className="text-sm text-gray-500">{item.year}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-        {/* Picture */}
+          {/* Picture */}
           <div className="relative h-[500px] w-full sm:h-[500px] rounded-[180px] overflow-hidden md:mx-auto">
             <Image src="/pp.jpg" alt="About Me" fill className="object-cover" />
           </div>

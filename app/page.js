@@ -4,9 +4,11 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import ProjectSection from "@/components/ProjectSection";
-import ToolsSection from "@/components/ToolsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import Skills from "@/components/Skills";
+import Why from "@/components/WhySection";
+import { Testimonials } from "@/components/Testimonials";
 
 export default function Home() {
   const projects = [
@@ -16,22 +18,16 @@ export default function Home() {
     { title: "Project 4", description: "Description of project 4", image: "/placeholder.svg" },
   ];
 
-  const tools = [
-    { name: "React", image: "/placeholder.svg" },
-    { name: "Next.js", image: "/placeholder.svg" },
-    { name: "JavaScript", image: "/placeholder.svg" },
-    { name: "Tailwind CSS", image: "/placeholder.svg" },
-    { name: "Node.js", image: "/placeholder.svg" },
-    { name: "PostgreSQL", image: "/placeholder.svg" },
-  ];
 
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
       <HeroSection />
       <AboutSection />
+      <Skills />
+      <Why />
+      <Testimonials />
       <ProjectSection projects={projects} />
-      <ToolsSection tools={tools} />
       <ContactSection />
       <Footer />
     </div>

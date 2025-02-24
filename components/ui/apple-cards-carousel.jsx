@@ -1,33 +1,33 @@
 "use client";
 import React, { useEffect, useRef, useState, createContext, useContext } from "react";
-import { IconArrowNarrowLeft, IconArrowNarrowRight, IconX } from "@tabler/icons-react";
+import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useOutsideClick } from "@/hooks/use-outside-click";
 
 export const CarouselContext = createContext({
   onCardClose: () => {},
   currentIndex: 0,
 });
 
-export const Carousel = ({ items, initialScroll = 0 }) => {
-  const carouselRef = React.useRef(null);
+export const Carousel = React.forwardRef(({ items, initialScroll = 0, isInfinite = true }, ref) => {
+  const carouselRef = ref || React.useRef(null);
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Add duplicates to both ends for smoother infinite scroll
-  const extendedItems = [...items.slice(-1), ...items, ...items.slice(0, 2)];
+  // Only add duplicates if infinite scroll is enabled
+  const extendedItems = isInfinite 
+    ? [...items.slice(-1), ...items, ...items.slice(0, 2)]
+    : items;
 
   useEffect(() => {
-    if (carouselRef.current) {
-      // Start from the first real item (after the duplicate)
-      const cardWidth = isMobile() ? 230 : 384;
-      carouselRef.current.scrollLeft = cardWidth + 16; // 16 is the gap
+    if (carouselRef.current && isInfinite) {
+      const cardWidth = isMobile() ? 144 : 256;
+      carouselRef.current.scrollLeft = cardWidth + 12;
       checkScrollability();
     }
-  }, []);
+  }, [isInfinite]);
 
   const checkScrollability = () => {
     if (carouselRef.current) {
@@ -38,19 +38,17 @@ export const Carousel = ({ items, initialScroll = 0 }) => {
   };
 
   const handleScroll = () => {
-    if (carouselRef.current) {
+    if (carouselRef.current && isInfinite) {
       const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
       const cardWidth = isMobile() ? 230 : 384;
       const gap = 16;
 
-      // When reaching the end (last duplicate)
       if (scrollLeft + clientWidth >= scrollWidth - 10) {
         carouselRef.current.style.scrollBehavior = 'auto';
         carouselRef.current.scrollLeft = cardWidth + gap;
         carouselRef.current.style.scrollBehavior = 'smooth';
       }
 
-      // When reaching the start (first duplicate)
       if (scrollLeft <= 10) {
         carouselRef.current.style.scrollBehavior = 'auto';
         carouselRef.current.scrollLeft = scrollWidth - (2 * cardWidth + 2 * gap);
@@ -93,8 +91,7 @@ export const Carousel = ({ items, initialScroll = 0 }) => {
   return (
     <CarouselContext.Provider value={{ onCardClose: handleCardClose, currentIndex }}>
       <div className="relative w-full">
-        <div
-          className="flex w-full overflow-x-scroll overscroll-x-auto py-10 md:py-20 scroll-smooth [scrollbar-width:none]"
+        <div className="flex w-full overflow-x-scroll overscroll-x-auto py-14 md:py-16 scroll-smooth [scrollbar-width:none]"
           ref={carouselRef}
           onScroll={handleScroll}
         >
@@ -106,9 +103,8 @@ export const Carousel = ({ items, initialScroll = 0 }) => {
 
           <div
             className={cn(
-              "flex flex-row justify-start gap-4 pl-4",
-              // remove max-w-4xl if you want the carousel to span the full width of its container
-              "max-w-7xl mx-auto"
+              "flex flex-row justify-start gap-3 pl-4",
+              "max-w-6xl mx-auto"
             )}
           >
             {extendedItems.map((item, index) => (
@@ -135,16 +131,16 @@ export const Carousel = ({ items, initialScroll = 0 }) => {
             ))}
           </div>
         </div>
-        <div className="flex justify-end gap-2 mr-10">
+        <div className="absolute left-1/2 bottom-0 -translate-x-1/2 flex justify-center gap-2">
           <button
-            className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
+            className="relative z-40 h-10 w-10 rounded-full bg-gray-100/80 backdrop-blur-sm flex items-center justify-center disabled:opacity-50 hover:bg-gray-100 transition-colors"
             onClick={scrollLeft}
             disabled={!canScrollLeft}
           >
             <IconArrowNarrowLeft className="h-6 w-6 text-gray-500" />
           </button>
           <button
-            className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
+            className="relative z-40 h-10 w-10 rounded-full bg-gray-100/80 backdrop-blur-sm flex items-center justify-center disabled:opacity-50 hover:bg-gray-100 transition-colors"
             onClick={scrollRight}
             disabled={!canScrollRight}
           >
@@ -154,13 +150,13 @@ export const Carousel = ({ items, initialScroll = 0 }) => {
       </div>
     </CarouselContext.Provider>
   );
-};
+});
 
 export const Card = ({ card, index, layout = false, link }) => {
   return (
     <motion.div
       layoutId={layout ? `card-${card.title}` : undefined}
-      className="rounded-3xl bg-gray-100 dark:bg-neutral-900 h-80 w-56 md:h-[40rem] md:w-96 overflow-hidden flex flex-col items-start justify-start relative z-10 group"
+      className="rounded-3xl bg-gray-100 dark:bg-neutral-900 h-96 w-80 md:h-[24rem] md:w-80 overflow-hidden flex flex-col items-start justify-start relative z-10 group"
     >
       <div className="absolute h-full top-0 inset-x-0 bg-gradient-to-b from-black/50 via-transparent to-transparent z-30 pointer-events-none group-hover:from-black/70 transition-all duration-500" />
       <div className="relative z-40 p-8">
