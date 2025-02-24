@@ -28,7 +28,7 @@ export default function Why() {
     ];
 
     return (
-        <section ref={containerRef} className="py-8 sm:py-20 px-4 md:px-12 bg-gray-50 min-h-lg">
+        <section id="why" ref={containerRef} className="py-8 sm:py-20 px-4 md:px-12 bg-gray-50 min-h-lg">
             <div className="max-w-6xl mx-auto">
                 <motion.h2 
                     style={{

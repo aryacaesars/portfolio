@@ -28,8 +28,11 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="max-w-md md:max-w-3xl mx-6 md:mx-auto p-8 md:p-8 mb-16 mt-16 border-2 border-gray-900 rounded-[40px] bg-white">
-      <h2 className="text-4xl font-bold mb-2 text-black text-center">Let's Work Together</h2>
+    <section 
+      id="contact" 
+      className="max-w-md md:max-w-3xl mx-6 md:mx-auto p-8 md:p-8 my-16 sm:my-20 border-2 border-gray-900 rounded-[40px] bg-white scroll-mt-24"
+    >
+      <h2 className="text-4xl font-bold text-black text-center">Let's Work Together</h2>
       <p className="text-base mb-8 text-gray-700 text-center">
         Have a project in mind? Let's discuss how I can help bring your ideas to life.
       </p>
@@ -69,7 +72,7 @@ export default function ContactSection() {
             className="w-full p-3 border border-gray-300 rounded-md text-base outline-none bg-white transition-all duration-200 hover:border-gray-700 focus:border-black focus:ring-1"
           />
         </div>
-        <button type="submit" className="bg-black text-white border-none p-3 text-base rounded-md cursor-pointer transition-opacity duration-200 hover:opacity-90">
+        <button type="submit" className="bg-black text-white border-none p-3 text-base rounded-full cursor-pointer transition-opacity duration-200 hover:opacity-90">
           Send Message
         </button>
       </form>

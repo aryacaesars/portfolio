@@ -124,7 +124,7 @@ export const Carousel = React.forwardRef(({ items, initialScroll = 0, isInfinite
   return (
     <CarouselContext.Provider value={{ onCardClose: handleCardClose, currentIndex }}>
       <div className="relative w-full">
-        <div className="flex w-full overflow-x-scroll overscroll-x-auto py-14 md:py-16 scroll-smooth [scrollbar-width:none]"
+        <div className="flex w-full overflow-x-scroll overscroll-x-auto py-4 md:py-4 scroll-smooth [scrollbar-width:none]"
           ref={carouselRef}
           onScroll={handleScroll}
         >

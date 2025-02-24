@@ -24,10 +24,10 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <AboutSection />
-      <Skills />
       <Why />
-      <Testimonials />
+      <Skills />
       <ProjectSection projects={projects} />
+      <Testimonials />
       <ContactSection />
       <Footer />
     </div>
